@@ -1,19 +1,24 @@
 from .connection import get_db_connection
+import psycopg2.extras
 
-def execute_query(query, params=None):
+def execute_query(query, params=None, fetchone=True):
     conn = get_db_connection()
     if conn is None:
-        return {"error": "Database connection failed"}
+        raise RuntimeError("Database connection failed")
 
     try:
-        with conn.cursor() as cursor:
+        with conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor) as cursor:
             cursor.execute(query, params)
-            if query.strip().lower().startswith("select"):
-                return cursor.fetchall()
+
+            if query.strip().lower().startswith("select") or "returning" in query.lower():
+                return cursor.fetchone() if fetchone else cursor.fetchall()
+
             conn.commit()
-            return {"message": "Query executed successfully"}
+            return None
+
     except Exception as e:
-        print(f"Error executing query: {e}")
-        return {"error": str(e)}
+        conn.rollback()
+        raise
+
     finally:
         conn.close()

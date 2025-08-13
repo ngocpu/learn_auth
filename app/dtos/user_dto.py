@@ -19,7 +19,7 @@ class UserLogin(UserBase):
     email: EmailStr
     password: str = Field(..., min_length=6)
 
-class UserResponse(UserBase):
+class AuthResponse(BaseModel):
     access_token: str
     refresh_token: str
-    data: UserBase
+    user_data: UserBase
