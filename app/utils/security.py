@@ -16,11 +16,11 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
 # Generate JWT access token
-def create_access_token(data: dict, expires_delta: int = None):
+def create_access_token(data: dict, expires_delta: int = 3600):
     to_encode = data.copy()
-    expire = datetime.utcnow() + timedelta(minutes=expires_delta or int(settings.JWT_EXPIRATION))
+    expire = datetime.utcnow() + timedelta(seconds=expires_delta)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, settings.JWT_SECRET, algorithm=settings.ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
 
 # Generate JWT refresh token
@@ -28,7 +28,7 @@ def create_refresh_token(data: dict, expires_delta: int = 43200):  # 30 days def
     to_encode = data.copy()
     expire = datetime.utcnow() + timedelta(minutes=expires_delta)
     to_encode.update({"exp": expire})
-    encoded_jwt = jwt.encode(to_encode, settings.JWT_SECRET, algorithm=settings.ALGORITHM)
+    encoded_jwt = jwt.encode(to_encode, settings.SECRET_KEY, algorithm=settings.ALGORITHM)
     return encoded_jwt
 
 # Generate random OTP code

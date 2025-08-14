@@ -24,4 +24,3 @@ class Token(BaseModel):
     user_id: int
     token: str
     expires_at: datetime
-    is_active: bool

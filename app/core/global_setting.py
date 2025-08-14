@@ -21,6 +21,9 @@ class Settings:
     EMAIL_SMTP_USER: str = os.getenv("MAIL_USERNAME", "user")
     EMAIL_SMTP_PASSWORD: str = os.getenv("MAIL_PASSWORD", "password")
     GG_CLIENT_ID: str = os.getenv("GG_CLIENT_ID", "")
-    GG_SECRET: str = os.getenv("GG_SECRET", "")
+    GG_SECRET: str = os.getenv("GG_CLIENT_SECRET", "")
+    GG_REDIRECT_URI: str = os.getenv("REDIRECT_URI", "http://localhost:8000/auth/google")
+    GG_TOKEN_URL: str = os.getenv("GG_TOKEN_URL", "https://oauth2.googleapis.com/token")
+    GG_USER_INFO_URL: str = os.getenv("GG_USER_INFO_URL", "https://www.googleapis.com/oauth2/v2/userinfo")
 
 settings = Settings()

@@ -10,7 +10,7 @@ class OTPQueries:
     """
 
     get_otp_by_code = """
-    SELECT * FROM opt_code WHERE code = %s AND user_id = %s AND is_used = FALSE AND expires_at > NOW()
+    SELECT * FROM opt_code WHERE code = %s AND user_id = %s AND is_used = FALSE AND expires_at > NOW() AT TIME ZONE 'UTC'
     """
 
     mark_otp_as_used = """
