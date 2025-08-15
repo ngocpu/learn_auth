@@ -24,9 +24,9 @@ class UserLogin(BaseModel):
 
 class AuthResponse(BaseModel):
     access_token: str
-    refresh_token: str
     user_data: UserBase
-class OTPRequest(BaseModel):
+class ActivateRequest(BaseModel):
+    email: EmailStr
     otp_code: str
 class OauthRequest(BaseModel):
     code: str

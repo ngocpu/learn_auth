@@ -14,10 +14,10 @@ class TokenRepositories:
         )
         return Token(**row)
 
-    async def get_token_by_value(self, token: str, conn=None) -> Optional[Token]:
-        row = await asyncio.to_thread(execute_query, TokenQueries.get_token_by_value, (token,), conn=conn)
+    async def get_valid_token(self, token: str, conn=None) -> Optional[Token]:
+        row = await asyncio.to_thread(execute_query, TokenQueries.get_valid_token, (token,), conn=conn)
         return Token(**row) if row else None
 
-    async def deactivate_token(self, token_id: int, conn=None) -> Token:
-        row = await asyncio.to_thread(execute_query, TokenQueries.deactivate_token, (token_id,), conn=conn)
+    async def revoke_token(self, token_id: int, conn=None) -> Token:
+        row = await asyncio.to_thread(execute_query, TokenQueries.revoke_token, (token_id,), conn=conn)
         return Token(**row)
